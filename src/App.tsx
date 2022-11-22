@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import NewFact from "./components/NewFact/NewFact";
 import { useLocalStorage } from './useLocalStorage';
+import { v4 as uuidV4} from 'uuid';
 
 export type Fact = {
   id: string
@@ -41,6 +42,16 @@ const factsWithTags = useMemo(() => {
     return {...fact, tags: tags.filter(tag => fact.tagIds.includes(tag.id)) }
   })
 }, [facts, tags])
+
+const onCreateFact = ({tags, ...data}: FactData) => {
+  setFacts(prevFacts => {
+    return [
+      ...prevFacts,
+      { ...data, id: uuidV4(), tagIds: tags.map(tag => tag.id) }
+    ]
+  })
+}
+
   return (
     <Container className="my-5">
       <Routes>
