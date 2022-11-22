@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import NewFact from "./components/NewFact/NewFact";
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
     <Container className="my-5">
       <Routes>
       <Route path='/' element={<h1>Dev Handbook</h1>} />
-      <Route path='/new' element={<h1>New</h1>} />
+      <Route path='/new' element={<NewFact />} />
       <Route path='/:id'>
         <Route index element={<h1>Show</h1>} />
         <Route path="edit" element={<h1>Edit</h1>} />
