@@ -1,4 +1,4 @@
-import { useState, } from 'react';
+import { useState, useMemo } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -35,6 +35,12 @@ export type Tag = {
 function App() {
 const [facts, setFacts] = useLocalStorage<RawFact[]>("NOTES", [])
 const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
+
+const factsWithTags = useMemo(() => {
+  return facts.map(fact => {
+    return {...fact, tags: tags.filter(tag => fact.tagIds.includes(tag.id)) }
+  })
+}, [facts, tags])
   return (
     <Container className="my-5">
       <Routes>
