@@ -1,6 +1,7 @@
-import { Stack, Row, Col, Form } from "react-bootstrap";
-import CreatetableReactSelect from 'react-select/creatable';
-import './FactForm.css'
+import { Stack, Row, Col, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import CreatetableReactSelect from "react-select/creatable";
+import "./FactForm.css";
 
 const FactForm = () => {
   return (
@@ -20,6 +21,21 @@ const FactForm = () => {
             </Form.Group>
           </Col>
         </Row>
+        <Form.Group controlId="Description">
+          <Form.Label>Description</Form.Label>
+          <Form.Control required as="textarea" rows={20} />
+        </Form.Group>
+        <Stack direction="horizontal" gap={3} className="justify-content-end">
+          <Button type="submit" variant="primary">
+            Save
+          </Button>
+          <Link to=".." >
+          <Button type="button" variant="outline-danger">
+            Cancel
+          </Button>
+          </Link>
+          
+        </Stack>
       </Stack>
     </Form>
   );
