@@ -4,6 +4,7 @@ import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import NewFact from "./components/NewFact/NewFact";
+import { useLocalStorage } from './useLocalStorage';
 
 export type Fact = {
   id: string
