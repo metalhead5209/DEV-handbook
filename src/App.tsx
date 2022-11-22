@@ -1,14 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-      <h1>Dev HandBook</h1>
-    </div>
+    <Container className="my-5">
+      <Routes>
+      <Route path='/' element={<h1>Dev Handbook</h1>} />
+      <Route path='/new' element={<h1>New</h1>} />
+      <Route path='/:id'>
+        <Route index element={<h1>Show</h1>} />
+        <Route path="edit" element={<h1>Edit</h1>} />
+      </Route>
+      <Route path='*' element={<Navigate to="/" />} />
+    </Routes>
+    </Container>
+    
   )
 }
 
