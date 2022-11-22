@@ -2,14 +2,14 @@ import { FormEvent, useRef, useState } from "react";
 import { Stack, Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CreatetableReactSelect from "react-select/creatable";
-import "./FactForm.css";
-import { FactData, Tag } from '../../App';
+import "./TopicForm.css";
+import { TopicData, Tag } from '../../App';
 
-type FactFormProps = {
-  onSubmit: (data: FactData) => void;
+type TopicFormProps = {
+  onSubmit: (data: TopicData) => void;
 }
 
-const FactForm = ({ onSubmit }: FactFormProps) => {
+const TopicForm = ({ onSubmit }: TopicFormProps) => {
   const subjectRef = useRef<HTMLInputElement>(null)
   const descriptionRef = useRef<HTMLTextAreaElement>(null)
   const [ selectedTags, setSelectedTags ] = useState<Tag[]>([])
@@ -69,4 +69,4 @@ const FactForm = ({ onSubmit }: FactFormProps) => {
   );
 };
 
-export default FactForm;
+export default TopicForm;
