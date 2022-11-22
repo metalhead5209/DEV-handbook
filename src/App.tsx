@@ -1,11 +1,39 @@
+import { useState, } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import NewFact from "./components/NewFact/NewFact";
 
-function App() {
+export type Fact = {
+  id: string
+} & FactData
 
+export type RawFact = {
+  id: string
+} & RawFactData
+
+export type RawFactData = {
+  subject: string
+  description: string
+  tagIds: string[]
+}
+
+export type FactData = {
+  subject: string
+  description: string
+  tags: Tag[]
+}
+
+export type Tag = {
+  id: string
+  label: string
+}
+
+
+function App() {
+const [facts, setFacts] = useLocalStorage<RawFact[]>("NOTES", [])
+const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", [])
   return (
     <Container className="my-5">
       <Routes>
