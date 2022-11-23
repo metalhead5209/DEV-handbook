@@ -3,16 +3,19 @@ import { Stack, Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import CreatetableReactSelect from "react-select/creatable";
 import "./TopicForm.css";
-import { TopicData, Tag } from '../../App';
+import { TopicData, Tag } from "../../App";
+import { v4 as uuidV4} from 'uuid';
 
 type TopicFormProps = {
   onSubmit: (data: TopicData) => void;
-}
+  onAddTag: (tag: Tag) => void;
+  availableTags: Tag[];
+};
 
-const TopicForm = ({ onSubmit }: TopicFormProps) => {
-  const subjectRef = useRef<HTMLInputElement>(null)
-  const descriptionRef = useRef<HTMLTextAreaElement>(null)
-  const [ selectedTags, setSelectedTags ] = useState<Tag[]>([])
+const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
+  const subjectRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -21,8 +24,8 @@ const TopicForm = ({ onSubmit }: TopicFormProps) => {
       subject: subjectRef.current!.value,
       description: descriptionRef.current!.value,
       tags: [],
-    })
-  }
+    });
+  };
   return (
     <Form>
       <Stack gap={3}>
@@ -36,16 +39,28 @@ const TopicForm = ({ onSubmit }: TopicFormProps) => {
           <Col>
             <Form.Group controlId="Tags">
               <Form.Label>Tags</Form.Label>
-              <CreatetableReactSelect value={selectedTags.map(tag => {
-                return {label: tag.label, value: tag.id}
-              })}
-              onChange={tags => {
-                setSelectedTags(tags.map(tag => {
-                  return { label: tag.label, id: tag.value}
-                }))
-              }} 
-              isMulti 
-              className="tag-select" />
+              <CreatetableReactSelect
+                onCreateOption={(label) => {
+                  const newTag = { id: uuidV4(), label };
+                  onAddTag(newTag);
+                  setSelectedTags((prev) => [...prev, newTag]);
+                }}
+                value={selectedTags.map((tag) => {
+                  return { label: tag.label, value: tag.id };
+                })}
+                options={availableTags.map(tag => {
+                  return { label: tag.label, value: tag.id }
+                })}
+                onChange={(tags) => {
+                  setSelectedTags(
+                    tags.map((tag) => {
+                      return { label: tag.label, id: tag.value };
+                    })
+                  );
+                }}
+                isMulti
+                className="tag-select danger"
+              />
             </Form.Group>
           </Col>
         </Row>
@@ -57,12 +72,11 @@ const TopicForm = ({ onSubmit }: TopicFormProps) => {
           <Button type="submit" variant="primary">
             Save
           </Button>
-          <Link to=".." >
-          <Button type="button" variant="outline-danger">
-            Cancel
-          </Button>
+          <Link to="..">
+            <Button type="button" variant="outline-danger">
+              Cancel
+            </Button>
           </Link>
-          
         </Stack>
       </Stack>
     </Form>
@@ -70,3 +84,4 @@ const TopicForm = ({ onSubmit }: TopicFormProps) => {
 };
 
 export default TopicForm;
+
