@@ -1,6 +1,6 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useRef, useState, } from "react";
 import { Stack, Row, Col, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreatetableReactSelect from "react-select/creatable";
 import "./TopicForm.css";
 import { TopicData, Tag } from "../../App";
@@ -16,15 +16,16 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
   const subjectRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
-
+  const navigate = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     onSubmit({
       subject: subjectRef.current!.value,
       description: descriptionRef.current!.value,
-      tags: [],
+      tags: selectedTags,
     })
+    navigate('..');
   };
   return (
     <Form onSubmit={handleSubmit}>
