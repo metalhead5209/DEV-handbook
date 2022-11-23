@@ -6,6 +6,7 @@ import { Container } from "react-bootstrap";
 import NewTopic from "./components/NewTopic/NewTopic";
 import  useLocalStorage  from "./useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
+import TopicList from "./components/TopicList/TopicList";
 
 export type Topic = {
   id: string;
@@ -61,7 +62,7 @@ function App() {
   return (
     <Container className="my-5">
       <Routes>
-        <Route path="/" element={<h1>Dev Handbook</h1>} />
+        <Route path="/" element={<TopicList />} />
         <Route
           path="/new"
           element={<NewTopic onSubmit={onCreateTopic} onAddTag={addTag} availableTags={tags} />}
