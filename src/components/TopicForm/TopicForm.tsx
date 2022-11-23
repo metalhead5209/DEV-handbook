@@ -24,10 +24,10 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
       subject: subjectRef.current!.value,
       description: descriptionRef.current!.value,
       tags: [],
-    });
+    })
   };
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <Stack gap={3}>
         <Row>
           <Col>

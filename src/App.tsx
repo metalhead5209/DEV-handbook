@@ -45,7 +45,7 @@ function App() {
     });
   }, [topics, tags]);
 
-  const onCreatetopic = ({ tags, ...data }: TopicData) => {
+  const onCreateTopic = ({ tags, ...data }: TopicData) => {
     setTopics((prevTopics) => {
       return [
         ...prevTopics,
@@ -64,7 +64,7 @@ function App() {
         <Route path="/" element={<h1>Dev Handbook</h1>} />
         <Route
           path="/new"
-          element={<NewTopic onSubmit={onCreatetopic} onAddTag={addTag} availableTags={tags} />}
+          element={<NewTopic onSubmit={onCreateTopic} onAddTag={addTag} availableTags={tags} />}
         />
         <Route path="/:id">
           <Route index element={<h1>Show</h1>} />
