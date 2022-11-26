@@ -62,7 +62,7 @@ function App() {
   return (
     <Container className="my-5">
       <Routes>
-        <Route path="/" element={<TopicList />} />
+        <Route path="/" element={<TopicList availableTags={tags} />} />
         <Route
           path="/new"
           element={<NewTopic onSubmit={onCreateTopic} onAddTag={addTag} availableTags={tags} />}
