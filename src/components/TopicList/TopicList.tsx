@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ReactSelect from "react-select";
 import { useState, useMemo } from "react";
 import { Tag } from "../../App";
-import styles from '../../TopicList.module.css'
+import styles from "../../TopicList.module.css";
 
 type SimplifiedTopic = {
   tags: Tag[];
@@ -16,12 +16,9 @@ type TopicListProps = {
   topics: SimplifiedTopic[];
 };
 
-
-
 const TopicList = ({ availableTags, topics }: TopicListProps) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [subject, setSubject] = useState("");
-
 
   const filteredTopics = useMemo(() => {
     return topics.filter((topic) => {
@@ -35,7 +32,6 @@ const TopicList = ({ availableTags, topics }: TopicListProps) => {
       );
     });
   }, [subject, selectedTags, topics]);
-
 
   return (
     <>
@@ -89,7 +85,7 @@ const TopicList = ({ availableTags, topics }: TopicListProps) => {
         </Row>
       </Form>
       <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
-        {filteredTopics.map(topic => (
+        {filteredTopics.map((topic) => (
           <Col key={topic.id}>
             <TopicCard
               id={topic.id}
@@ -100,25 +96,38 @@ const TopicList = ({ availableTags, topics }: TopicListProps) => {
         ))}
       </Row>
     </>
-  )
+  );
 };
 const TopicCard = ({ id, subject, tags }: SimplifiedTopic) => {
-    return <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`}>
-        <Card.Body>
-            <Stack gap={2} className='align-items-center justify-content-center h-100'>
-                <span className="fs-5">{subject}</span>
-                {tags.length > 0 && (
-                    <Stack gap={1} direction='horizontal' className='justify-content-center flex-wrap'>
-                        {tags.map(tag => (
-                            <Badge className='text-truncate' key={tag.id}>
-                                {tag.label}
-                            </Badge>
-                        ))}
-                    </Stack>
-                )}
+  return (
+    <Card
+      as={Link}
+      to={`/${id}`}
+      className={`h-100 text-reset text-decoration-none ${styles.card}`}
+    >
+      <Card.Body>
+        <Stack
+          gap={2}
+          className="align-items-center justify-content-center h-100"
+        >
+          <span className="fs-5">{subject}</span>
+          {tags.length > 0 && (
+            <Stack
+              gap={1}
+              direction="horizontal"
+              className="justify-content-center flex-wrap"
+            >
+              {tags.map((tag) => (
+                <Badge className="text-truncate" key={tag.id}>
+                  {tag.label}
+                </Badge>
+              ))}
             </Stack>
-        </Card.Body>
+          )}
+        </Stack>
+      </Card.Body>
     </Card>
-  };
+  );
+};
 
 export default TopicList;

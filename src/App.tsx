@@ -9,6 +9,7 @@ import { v4 as uuidV4 } from "uuid";
 import TopicList from "./components/TopicList/TopicList";
 import TopicLayout from "./components/TopicLayout/TopicLayout";
 import Topic from "./components/Topic/Topic";
+import EditTopic from "./components/EditTopic/EditTopc";
 
 export type Topic = {
   id: string;
@@ -35,7 +36,7 @@ export type Tag = {
   label: string;
 };
 
-function App() {
+const App = () => {
   const [topics, setTopics] = useLocalStorage<RawTopic[]>("NOTES", []);
   const [tags, setTags] = useLocalStorage<Tag[]>("TAGS", []);
 
@@ -54,6 +55,18 @@ function App() {
         ...prevTopics,
         { ...data, id: uuidV4(), tagIds: tags.map((tag) => tag.id) },
       ];
+    });
+  };
+
+  const onUpdateTopic = (id: string, { tags, ...data }: TopicData) => {
+    setTopics((prevTopics) => {
+      return prevTopics.map((topic) => {
+        if (topic.id === id) {
+          return { ...topic, ...data, tagIds: tags.map((tag) => tag.id) };
+        } else {
+          return topic;
+        }
+      });
     });
   };
 
@@ -78,17 +91,23 @@ function App() {
             />
           }
         />
-        <Route 
-          path="/:id"
-          element={<TopicLayout topics={topicsWithTags} />}
-          >
+        <Route path="/:id" element={<TopicLayout topics={topicsWithTags} />}>
           <Route index element={<Topic />} />
-          <Route path="edit" element={<h1>Edit</h1>} />
+          <Route
+            path="edit"
+            element={
+              <EditTopic
+                onSubmit={onUpdateTopic}
+                onAddTag={addTag}
+                availableTags={tags}
+              />
+            }
+          />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Container>
   );
-}
+};
 
 export default App;

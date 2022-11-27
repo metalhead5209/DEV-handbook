@@ -1,21 +1,28 @@
-import { FormEvent, useRef, useState, } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { Stack, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import CreatetableReactSelect from "react-select/creatable";
 import "./TopicForm.css";
 import { TopicData, Tag } from "../../App";
-import { v4 as uuidV4} from 'uuid';
+import { v4 as uuidV4 } from "uuid";
 
 type TopicFormProps = {
   onSubmit: (data: TopicData) => void;
   onAddTag: (tag: Tag) => void;
   availableTags: Tag[];
-};
+} & Partial<TopicData>;
 
-const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
+const TopicForm = ({
+  onSubmit,
+  onAddTag,
+  availableTags,
+  subject = "",
+  description = "",
+  tags = [],
+}: TopicFormProps) => {
   const subjectRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(tags);
   const navigate = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -24,8 +31,8 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
       subject: subjectRef.current!.value,
       description: descriptionRef.current!.value,
       tags: selectedTags,
-    })
-    navigate('..');
+    });
+    navigate("..");
   };
   return (
     <Form onSubmit={handleSubmit}>
@@ -34,7 +41,7 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
           <Col>
             <Form.Group controlId="Subject">
               <Form.Label>Subject</Form.Label>
-              <Form.Control ref={subjectRef} required />
+              <Form.Control ref={subjectRef} required defaultValue={subject} />
             </Form.Group>
           </Col>
           <Col>
@@ -49,8 +56,8 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
                 value={selectedTags.map((tag) => {
                   return { label: tag.label, value: tag.id };
                 })}
-                options={availableTags.map(tag => {
-                  return { label: tag.label, value: tag.id }
+                options={availableTags.map((tag) => {
+                  return { label: tag.label, value: tag.id };
                 })}
                 onChange={(tags) => {
                   setSelectedTags(
@@ -67,7 +74,13 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
         </Row>
         <Form.Group controlId="Description">
           <Form.Label>Description</Form.Label>
-          <Form.Control required as="textarea" ref={descriptionRef} rows={20} />
+          <Form.Control
+            defaultValue={description}
+            required
+            as="textarea"
+            ref={descriptionRef}
+            rows={20}
+          />
         </Form.Group>
         <Stack direction="horizontal" gap={3} className="justify-content-end">
           <Button type="submit" variant="primary">
@@ -85,4 +98,3 @@ const TopicForm = ({ onSubmit, onAddTag, availableTags }: TopicFormProps) => {
 };
 
 export default TopicForm;
-
