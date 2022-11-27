@@ -4,9 +4,10 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import NewTopic from "./components/NewTopic/NewTopic";
-import  useLocalStorage  from "./useLocalStorage";
+import useLocalStorage from "./useLocalStorage";
 import { v4 as uuidV4 } from "uuid";
 import TopicList from "./components/TopicList/TopicList";
+import TopicLayout from "./components/TopicLayout/TopicLayout";
 
 export type Topic = {
   id: string;
@@ -62,12 +63,24 @@ function App() {
   return (
     <Container className="my-5">
       <Routes>
-        <Route path="/" element={<TopicList topics={topicsWithTags} availableTags={tags} />} />
+        <Route
+          path="/"
+          element={<TopicList topics={topicsWithTags} availableTags={tags} />}
+        />
         <Route
           path="/new"
-          element={<NewTopic onSubmit={onCreateTopic} onAddTag={addTag} availableTags={tags} />}
+          element={
+            <NewTopic
+              onSubmit={onCreateTopic}
+              onAddTag={addTag}
+              availableTags={tags}
+            />
+          }
         />
-        <Route path="/:id">
+        <Route 
+          path="/:id"
+          element={<TopicLayout topics={topicsWithTags} />}
+          >
           <Route index element={<h1>Show</h1>} />
           <Route path="edit" element={<h1>Edit</h1>} />
         </Route>
