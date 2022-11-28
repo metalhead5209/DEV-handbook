@@ -76,6 +76,24 @@ const App = () => {
     })
   }
 
+  const updateTag = (id: string, label: string) => {
+    setTags(prevTags => {
+      return prevTags.map(tag => {
+        if (tag.id === id) {
+          return { ...tag, label}
+        } else {
+          return tag
+        }
+      })
+    })
+  }
+
+  const deleteTag = (id: string) => {
+    setTags(prevTags => {
+      return prevTags.filter(tag => tag.id !== id)
+    })
+  }
+
   const addTag = (tag: Tag) => {
     setTags((prev) => [...prev, tag]);
   };
@@ -85,7 +103,7 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={<TopicList topics={topicsWithTags} availableTags={tags} />}
+          element={<TopicList topics={topicsWithTags} availableTags={tags} updateTag={updateTag} deleteTag={deleteTag} />}
         />
         <Route
           path="/new"

@@ -23,15 +23,19 @@ type SimplifiedTopic = {
 type TopicListProps = {
   availableTags: Tag[];
   topics: SimplifiedTopic[];
+  deleteTag: (id: string) => void
+  updateTag: (id: string, label: string) => void;
 };
 
 type EditTagsModalProps = {
   show: boolean;
   availableTags: Tag[];
   handleClose: () => void;
+  deleteTag: (id: string) => void
+  updateTag: (id: string, label: string) => void;
 };
 
-const TopicList = ({ availableTags, topics }: TopicListProps) => {
+const TopicList = ({ availableTags, topics, deleteTag, updateTag }: TopicListProps) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [subject, setSubject] = useState("");
   const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false);
@@ -117,6 +121,8 @@ const TopicList = ({ availableTags, topics }: TopicListProps) => {
         ))}
       </Row>
       <EditTagsModal
+        updateTag={updateTag}
+        deleteTag={deleteTag}
         show={editTagsModalIsOpen}
         handleClose={() => setEditTagsModalIsOpen(false)}
         availableTags={availableTags}
@@ -160,6 +166,8 @@ const EditTagsModal = ({
   availableTags,
   handleClose,
   show,
+  deleteTag,
+  updateTag
 }: EditTagsModalProps) => {
   return (
     <Modal show={show} onHide={handleClose}>
@@ -175,12 +183,12 @@ const EditTagsModal = ({
                   <Form.Control
                     type="text"
                     value={tag.label}
-                    onChange={e => onUpdateTag(tag.id, e.target.value)}
+                    onChange={e => updateTag(tag.id, e.target.value)}
                   />
                 </Col>
                 <Col xs="auto">
                   <Button
-                    onClick={() => onDeleteTag(tag.id)}
+                    onClick={() => deleteTag(tag.id)}
                     variant="outline-danger"
                   >
                     &times;
