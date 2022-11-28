@@ -9,7 +9,7 @@ import { v4 as uuidV4 } from "uuid";
 import TopicList from "./components/TopicList/TopicList";
 import TopicLayout from "./components/TopicLayout/TopicLayout";
 import Topic from "./components/Topic/Topic";
-import EditTopic from "./components/EditTopic/EditTopc";
+import EditTopic from "./components/EditTopic/EditTopic";
 
 export type Topic = {
   id: string;
@@ -70,6 +70,12 @@ const App = () => {
     });
   };
 
+  const onDeleteTopic = (id: string) => {
+    setTopics(prevTopic => {
+      return prevTopic.filter(topic => topic.id !== id);
+    })
+  }
+
   const addTag = (tag: Tag) => {
     setTags((prev) => [...prev, tag]);
   };
@@ -92,7 +98,7 @@ const App = () => {
           }
         />
         <Route path="/:id" element={<TopicLayout topics={topicsWithTags} />}>
-          <Route index element={<Topic />} />
+          <Route index element={<Topic onDeleteTopic={onDeleteTopic}/>} />
           <Route
             path="edit"
             element={

@@ -17,7 +17,7 @@ const EditTopic = ({ onSubmit, onAddTag, availableTags }: EditTopicProps) => {
         subject={topic.subject}
         description={topic.description}
         tags={topic.tags}
-        onSubmit={data => onSubmit(topic.id, data)}
+        onSubmit={(data) => onSubmit(topic.id, data)}
         onAddTag={onAddTag}
         availableTags={availableTags}
       />
