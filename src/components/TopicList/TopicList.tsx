@@ -1,4 +1,13 @@
-import { Row, Col, Stack, Button, Form, Card, Badge } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Stack,
+  Button,
+  Form,
+  Card,
+  Badge,
+  Modal,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import ReactSelect from "react-select";
 import { useState, useMemo } from "react";
@@ -16,9 +25,16 @@ type TopicListProps = {
   topics: SimplifiedTopic[];
 };
 
+type EditTagsModalProps = {
+  show: boolean;
+  availableTags: Tag[];
+  handleClose: () => void;
+};
+
 const TopicList = ({ availableTags, topics }: TopicListProps) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [subject, setSubject] = useState("");
+  const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false);
 
   const filteredTopics = useMemo(() => {
     return topics.filter((topic) => {
@@ -44,7 +60,12 @@ const TopicList = ({ availableTags, topics }: TopicListProps) => {
             <Link to="/new">
               <Button variant="primary">Create</Button>
             </Link>
-            <Button variant="outline-secondary">Edit Tags</Button>
+            <Button
+              onClick={() => setEditTagsModalIsOpen(true)}
+              variant="outline-secondary"
+            >
+              Edit Tags
+            </Button>
           </Stack>
         </Col>
       </Row>
@@ -95,6 +116,11 @@ const TopicList = ({ availableTags, topics }: TopicListProps) => {
           </Col>
         ))}
       </Row>
+      <EditTagsModal
+        show={editTagsModalIsOpen}
+        handleClose={() => setEditTagsModalIsOpen(false)}
+        availableTags={availableTags}
+      />
     </>
   );
 };
@@ -127,6 +153,45 @@ const TopicCard = ({ id, subject, tags }: SimplifiedTopic) => {
         </Stack>
       </Card.Body>
     </Card>
+  );
+};
+
+const EditTagsModal = ({
+  availableTags,
+  handleClose,
+  show,
+}: EditTagsModalProps) => {
+  return (
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Edit Tags</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+        <Stack gap={2}>
+            {availableTags.map(tag => (
+              <Row key={tag.id}>
+                <Col>
+                  <Form.Control
+                    type="text"
+                    value={tag.label}
+                    onChange={e => onUpdateTag(tag.id, e.target.value)}
+                  />
+                </Col>
+                <Col xs="auto">
+                  <Button
+                    onClick={() => onDeleteTag(tag.id)}
+                    variant="outline-danger"
+                  >
+                    &times;
+                  </Button>
+                </Col>
+              </Row>
+            ))}
+          </Stack>
+        </Form>
+      </Modal.Body>
+    </Modal>
   );
 };
 
