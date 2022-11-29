@@ -82,7 +82,7 @@ const TopicForm = ({
           />
         </Form.Group>
         <Stack direction="horizontal" gap={3} className="justify-content-end">
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="outline-primary">
             Save
           </Button>
           <Link to="..">
