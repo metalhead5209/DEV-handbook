@@ -14,6 +14,7 @@ import { useState, useMemo } from "react";
 import { Tag } from "../../App";
 import styles from "../../TopicList.module.css";
 
+
 type SimplifiedTopic = {
   tags: Tag[];
   subject: string;
@@ -62,11 +63,12 @@ const TopicList = ({ availableTags, topics, deleteTag, updateTag }: TopicListPro
         <Col xs="auto">
           <Stack gap={2} direction="horizontal">
             <Link to="/new">
-              <Button variant="primary">Create</Button>
+              <Button variant="outline-primary" className='btns'>Create</Button>
             </Link>
             <Button
               onClick={() => setEditTagsModalIsOpen(true)}
-              variant="outline-secondary"
+              variant="outline-success"
+              className='btns'
             >
               Edit Tags
             </Button>

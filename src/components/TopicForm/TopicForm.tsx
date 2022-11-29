@@ -5,6 +5,7 @@ import CreatetableReactSelect from "react-select/creatable";
 import "./TopicForm.css";
 import { TopicData, Tag } from "../../App";
 import { v4 as uuidV4 } from "uuid";
+import '../TopicForm/TopicForm.css'
 
 type TopicFormProps = {
   onSubmit: (data: TopicData) => void;
@@ -41,7 +42,7 @@ const TopicForm = ({
           <Col>
             <Form.Group controlId="Subject">
               <Form.Label>Subject</Form.Label>
-              <Form.Control ref={subjectRef} required defaultValue={subject} />
+              <Form.Control ref={subjectRef} required defaultValue={subject} className="inputs" />
             </Form.Group>
           </Col>
           <Col>

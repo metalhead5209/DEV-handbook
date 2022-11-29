@@ -28,7 +28,7 @@ const Topic = ({ onDeleteTopic }: TopicProps) => {
         <Col xs="auto">
           <Stack gap={2} direction="horizontal">
             <Link to={`/${topic.id}/edit`}>
-              <Button variant="primary">Edit</Button>
+              <Button variant="outline-primary">Edit</Button>
             </Link>
             <Button onClick={() => {
                 onDeleteTopic(topic.id)
@@ -41,7 +41,7 @@ const Topic = ({ onDeleteTopic }: TopicProps) => {
           </Stack>
         </Col>
       </Row>
-      <ReactMarkdown>{topic.description}</ReactMarkdown>
+      <ReactMarkdown className="mkdown">{topic.description}</ReactMarkdown>
     </>
   );
 };
