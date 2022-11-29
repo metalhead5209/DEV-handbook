@@ -2,10 +2,8 @@ import { FormEvent, useRef, useState } from "react";
 import { Stack, Row, Col, Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import CreatetableReactSelect from "react-select/creatable";
-import "./TopicForm.css";
 import { TopicData, Tag } from "../../App";
 import { v4 as uuidV4 } from "uuid";
-import '../TopicForm/TopicForm.css'
 
 type TopicFormProps = {
   onSubmit: (data: TopicData) => void;
